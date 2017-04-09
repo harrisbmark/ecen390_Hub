@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Laser Tag</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" ></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="collapsed navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-5" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a href="#" class="navbar-brand">Laser Tag</a>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-5">
+            <p class="navbar-text navbar-right">[Game Code]</p>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main class="row container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <canvas id="hitChart"></canvas>
+          </div> 
+        </div>
+    </main>
+    <!--<ul id="hit"></ul>-->
+  </body>
+  <script>
+    var hitChartData = new Array(10).fill(0);
+    var ctx_hitChart = $("#hitChart");
+    var hitChart = new Chart(ctx_hitChart,
+    {
+      type: "bar",
+      data: {
+        labels: ["Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6", "Player 7", "Player 8", "Player 9", "Player 10"],
+        datasets: [{
+          label: "Number of Hits Taken",
+          data: hitChartData,
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.2)",
+            "rgba(54, 162, 235, 0.2)",
+            "rgba(255, 206, 86, 0.2)",
+            "rgba(75, 192, 192, 0.2)",
+            "rgba(153, 102, 255, 0.2)",
+            "rgba(255, 159, 64, 0.2)",
+            "rgba(65, 131, 126, 0.2)",
+            "rgba(167, 84, 134, 0.2)",
+            "rgba(180, 203, 101, 0.2)",
+            "rgba(212, 131, 106, 0.2)"
+          ],
+          borderColor: [
+            "rgba(255,99,132,1)",
+            "rgba(54, 162, 235, 1)",
+            "rgba(255, 206, 86, 1)",
+            "rgba(75, 192, 192, 1)",
+            "rgba(153, 102, 255, 1)",
+            "rgba(255, 159, 64, 1)",
+            "rgba(65, 131, 126, 1)",
+            "rgba(167, 84, 134, 1)",
+            "rgba(180, 203, 101, 1)",
+            "rgba(212, 131, 106, 1)"
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero:true
+            }
+          }]
+        }
+      }
+    });
+
+    /*var ul = $("#hit");
+    for (var i = 0; i < 10; i++)
+    {
+      ul.append("<li style='cursor: pointer;' player_number=" + i + ">Hit Player " + i + "</li>");
+    }*/
+
+    $(function()
+    {
+      var socket = io();
+
+      /*$("#hit li").click(function()
+      {
+        socket.emit("hit", $(this).attr("player_number"));
+        //console.log("Hit");
+      });*/
+
+      socket.on("hit", function(player_number, hits)
+      {
+        //console.log(player_number);
+        //hitChart.data.datasets[0].data[player_number] = hitChart.data.datasets[0].data[player_number] + 1;
+        hitChart.data.datasets[0].data[player_number] = hits;
+        hitChart.update();
+      });
+    });
+
+    /*$(function()
+    {
+      var socket = io();
+
+      socket.on("connected", function(data)
+      {
+        socket.emit("ready", {});
+      });
+      socket.on("update", function(data)
+      {
+        console.log(data.message.payload);
+      });
+    });*/
+  </script>
+</html>
