@@ -2,8 +2,6 @@
 
 ## Statements for Reference
 ### PostgreSQL
-
-
 Repeat this 10 times to create the player 1-10 hit tables.
 ```sql
 CREATE TABLE playerX.hits (player_frequency SERIAL NOT NULL PRIMARY KEY, hits integer);
@@ -27,6 +25,12 @@ CREATE TRIGGER shots_trigger AFTER UPDATE ON shots FOR EACH ROW EXECUTE PROCEDUR
 SQL script execution:
 ```bash
 psql -h localhost -d lasertag -U lasertag -p 5432 -a -q -f ./lasertag.sql
+```
+
+Change user to PostgreSQL and get access to the lasertag database
+```bash
+su postgres
+psql -d lasertag
 ```
 
 ### Docker
