@@ -3,7 +3,8 @@ var http = require("http").Server(app);
 var pg = require("pg");
 var io = require("socket.io")(http);
 
-var pg_connection = "tcp://laser-tag:bgt56yhn@localhost/laser-tag";
+//var pg_connection = "tcp://laser-tag:bgt56yhn@localhost/laser-tag";
+var pg_connection = "tcp://lasertag:bgt56yhn@localhost/lasertag";
 var pg_client = new pg.Client(pg_connection);
 
 pg_client.connect();
