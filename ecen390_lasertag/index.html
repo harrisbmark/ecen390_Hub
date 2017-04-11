@@ -222,22 +222,22 @@
       socket.on("shot", function(player_number, shots)
       {
         console.log("shot", player_number, shots, shotChart);
-        /*shotChart.datasets[0].bars[player_number].value = shots;
-        shotChart.update();*/
+        shotChart.data.datasets[0].data[player_number] = shots;
+        shotChart.update();
       });
 
       socket.on("hit", function(player_number, hits)
       {
-        console.log("hit", player_number, hits);
-        /*hitChart.data.datasets[0].data[player_number] = hits;
-        hitChart.update();*/
+        console.log("hit", player_number, hits, hitChart);
+        hitChart.data.datasets[0].data[player_number] = hits;
+        hitChart.update();
       });
 
       socket.on("takedown", function(player_number, takedowns)
       {
-        console.log("takedown", player_number, takedowns);
-        /*takedownChart.data.datasets[0].data[player_number] = takedowns;
-        takedownChart.update();*/
+        console.log("takedown", player_number, takedowns, takedownChart);
+        takedownChart.data.datasets[0].data[player_number] = takedowns;
+        takedownChart.update();
       });
     });
   </script>
