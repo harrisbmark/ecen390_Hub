@@ -1,0 +1,948 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.6
+-- Dumped by pg_dump version 9.5.6
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: player1; Type: SCHEMA; Schema: -; Owner: laser-tag
+--
+
+CREATE SCHEMA player1;
+
+
+ALTER SCHEMA player1 OWNER TO "laser-tag";
+
+--
+-- Name: player10; Type: SCHEMA; Schema: -; Owner: laser-tag
+--
+
+CREATE SCHEMA player10;
+
+
+ALTER SCHEMA player10 OWNER TO "laser-tag";
+
+--
+-- Name: player2; Type: SCHEMA; Schema: -; Owner: laser-tag
+--
+
+CREATE SCHEMA player2;
+
+
+ALTER SCHEMA player2 OWNER TO "laser-tag";
+
+--
+-- Name: player3; Type: SCHEMA; Schema: -; Owner: laser-tag
+--
+
+CREATE SCHEMA player3;
+
+
+ALTER SCHEMA player3 OWNER TO "laser-tag";
+
+--
+-- Name: player4; Type: SCHEMA; Schema: -; Owner: laser-tag
+--
+
+CREATE SCHEMA player4;
+
+
+ALTER SCHEMA player4 OWNER TO "laser-tag";
+
+--
+-- Name: player5; Type: SCHEMA; Schema: -; Owner: laser-tag
+--
+
+CREATE SCHEMA player5;
+
+
+ALTER SCHEMA player5 OWNER TO "laser-tag";
+
+--
+-- Name: player6; Type: SCHEMA; Schema: -; Owner: laser-tag
+--
+
+CREATE SCHEMA player6;
+
+
+ALTER SCHEMA player6 OWNER TO "laser-tag";
+
+--
+-- Name: player7; Type: SCHEMA; Schema: -; Owner: laser-tag
+--
+
+CREATE SCHEMA player7;
+
+
+ALTER SCHEMA player7 OWNER TO "laser-tag";
+
+--
+-- Name: player8; Type: SCHEMA; Schema: -; Owner: laser-tag
+--
+
+CREATE SCHEMA player8;
+
+
+ALTER SCHEMA player8 OWNER TO "laser-tag";
+
+--
+-- Name: player9; Type: SCHEMA; Schema: -; Owner: laser-tag
+--
+
+CREATE SCHEMA player9;
+
+
+ALTER SCHEMA player9 OWNER TO "laser-tag";
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: notify_trigger(); Type: FUNCTION; Schema: public; Owner: laser-tag
+--
+
+CREATE FUNCTION notify_trigger() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$ DECLARE BEGIN PERFORM pg_notify('watchers', row_to_json(NEW)::text); RETURN new; END; $$;
+
+
+ALTER FUNCTION public.notify_trigger() OWNER TO "laser-tag";
+
+SET search_path = player1, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: hits; Type: TABLE; Schema: player1; Owner: laser-tag
+--
+
+CREATE TABLE hits (
+    player_frequency integer NOT NULL,
+    hits integer
+);
+
+
+ALTER TABLE hits OWNER TO "laser-tag";
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE; Schema: player1; Owner: laser-tag
+--
+
+CREATE SEQUENCE hits_player_frequency_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hits_player_frequency_seq OWNER TO "laser-tag";
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE OWNED BY; Schema: player1; Owner: laser-tag
+--
+
+ALTER SEQUENCE hits_player_frequency_seq OWNED BY hits.player_frequency;
+
+
+SET search_path = player10, pg_catalog;
+
+--
+-- Name: hits; Type: TABLE; Schema: player10; Owner: laser-tag
+--
+
+CREATE TABLE hits (
+    player_frequency integer NOT NULL,
+    hits integer
+);
+
+
+ALTER TABLE hits OWNER TO "laser-tag";
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE; Schema: player10; Owner: laser-tag
+--
+
+CREATE SEQUENCE hits_player_frequency_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hits_player_frequency_seq OWNER TO "laser-tag";
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE OWNED BY; Schema: player10; Owner: laser-tag
+--
+
+ALTER SEQUENCE hits_player_frequency_seq OWNED BY hits.player_frequency;
+
+
+SET search_path = player2, pg_catalog;
+
+--
+-- Name: hits; Type: TABLE; Schema: player2; Owner: laser-tag
+--
+
+CREATE TABLE hits (
+    player_frequency integer NOT NULL,
+    hits integer
+);
+
+
+ALTER TABLE hits OWNER TO "laser-tag";
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE; Schema: player2; Owner: laser-tag
+--
+
+CREATE SEQUENCE hits_player_frequency_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hits_player_frequency_seq OWNER TO "laser-tag";
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE OWNED BY; Schema: player2; Owner: laser-tag
+--
+
+ALTER SEQUENCE hits_player_frequency_seq OWNED BY hits.player_frequency;
+
+
+SET search_path = player3, pg_catalog;
+
+--
+-- Name: hits; Type: TABLE; Schema: player3; Owner: laser-tag
+--
+
+CREATE TABLE hits (
+    player_frequency integer NOT NULL,
+    hits integer
+);
+
+
+ALTER TABLE hits OWNER TO "laser-tag";
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE; Schema: player3; Owner: laser-tag
+--
+
+CREATE SEQUENCE hits_player_frequency_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hits_player_frequency_seq OWNER TO "laser-tag";
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE OWNED BY; Schema: player3; Owner: laser-tag
+--
+
+ALTER SEQUENCE hits_player_frequency_seq OWNED BY hits.player_frequency;
+
+
+SET search_path = player4, pg_catalog;
+
+--
+-- Name: hits; Type: TABLE; Schema: player4; Owner: laser-tag
+--
+
+CREATE TABLE hits (
+    player_frequency integer NOT NULL,
+    hits integer
+);
+
+
+ALTER TABLE hits OWNER TO "laser-tag";
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE; Schema: player4; Owner: laser-tag
+--
+
+CREATE SEQUENCE hits_player_frequency_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hits_player_frequency_seq OWNER TO "laser-tag";
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE OWNED BY; Schema: player4; Owner: laser-tag
+--
+
+ALTER SEQUENCE hits_player_frequency_seq OWNED BY hits.player_frequency;
+
+
+SET search_path = player5, pg_catalog;
+
+--
+-- Name: hits; Type: TABLE; Schema: player5; Owner: laser-tag
+--
+
+CREATE TABLE hits (
+    player_frequency integer NOT NULL,
+    hits integer
+);
+
+
+ALTER TABLE hits OWNER TO "laser-tag";
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE; Schema: player5; Owner: laser-tag
+--
+
+CREATE SEQUENCE hits_player_frequency_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hits_player_frequency_seq OWNER TO "laser-tag";
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE OWNED BY; Schema: player5; Owner: laser-tag
+--
+
+ALTER SEQUENCE hits_player_frequency_seq OWNED BY hits.player_frequency;
+
+
+SET search_path = player6, pg_catalog;
+
+--
+-- Name: hits; Type: TABLE; Schema: player6; Owner: laser-tag
+--
+
+CREATE TABLE hits (
+    player_frequency integer NOT NULL,
+    hits integer
+);
+
+
+ALTER TABLE hits OWNER TO "laser-tag";
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE; Schema: player6; Owner: laser-tag
+--
+
+CREATE SEQUENCE hits_player_frequency_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hits_player_frequency_seq OWNER TO "laser-tag";
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE OWNED BY; Schema: player6; Owner: laser-tag
+--
+
+ALTER SEQUENCE hits_player_frequency_seq OWNED BY hits.player_frequency;
+
+
+SET search_path = player7, pg_catalog;
+
+--
+-- Name: hits; Type: TABLE; Schema: player7; Owner: laser-tag
+--
+
+CREATE TABLE hits (
+    player_frequency integer NOT NULL,
+    hits integer
+);
+
+
+ALTER TABLE hits OWNER TO "laser-tag";
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE; Schema: player7; Owner: laser-tag
+--
+
+CREATE SEQUENCE hits_player_frequency_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hits_player_frequency_seq OWNER TO "laser-tag";
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE OWNED BY; Schema: player7; Owner: laser-tag
+--
+
+ALTER SEQUENCE hits_player_frequency_seq OWNED BY hits.player_frequency;
+
+
+SET search_path = player8, pg_catalog;
+
+--
+-- Name: hits; Type: TABLE; Schema: player8; Owner: laser-tag
+--
+
+CREATE TABLE hits (
+    player_frequency integer NOT NULL,
+    hits integer
+);
+
+
+ALTER TABLE hits OWNER TO "laser-tag";
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE; Schema: player8; Owner: laser-tag
+--
+
+CREATE SEQUENCE hits_player_frequency_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hits_player_frequency_seq OWNER TO "laser-tag";
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE OWNED BY; Schema: player8; Owner: laser-tag
+--
+
+ALTER SEQUENCE hits_player_frequency_seq OWNED BY hits.player_frequency;
+
+
+SET search_path = player9, pg_catalog;
+
+--
+-- Name: hits; Type: TABLE; Schema: player9; Owner: laser-tag
+--
+
+CREATE TABLE hits (
+    player_frequency integer NOT NULL,
+    hits integer
+);
+
+
+ALTER TABLE hits OWNER TO "laser-tag";
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE; Schema: player9; Owner: laser-tag
+--
+
+CREATE SEQUENCE hits_player_frequency_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hits_player_frequency_seq OWNER TO "laser-tag";
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE OWNED BY; Schema: player9; Owner: laser-tag
+--
+
+ALTER SEQUENCE hits_player_frequency_seq OWNED BY hits.player_frequency;
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: shots; Type: TABLE; Schema: public; Owner: laser-tag
+--
+
+CREATE TABLE shots (
+    player_frequency integer NOT NULL,
+    shots integer
+);
+
+
+ALTER TABLE shots OWNER TO "laser-tag";
+
+--
+-- Name: shots_player_frequency_seq; Type: SEQUENCE; Schema: public; Owner: laser-tag
+--
+
+CREATE SEQUENCE shots_player_frequency_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE shots_player_frequency_seq OWNER TO "laser-tag";
+
+--
+-- Name: shots_player_frequency_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: laser-tag
+--
+
+ALTER SEQUENCE shots_player_frequency_seq OWNED BY shots.player_frequency;
+
+
+SET search_path = player1, pg_catalog;
+
+--
+-- Name: player_frequency; Type: DEFAULT; Schema: player1; Owner: laser-tag
+--
+
+ALTER TABLE ONLY hits ALTER COLUMN player_frequency SET DEFAULT nextval('hits_player_frequency_seq'::regclass);
+
+
+SET search_path = player10, pg_catalog;
+
+--
+-- Name: player_frequency; Type: DEFAULT; Schema: player10; Owner: laser-tag
+--
+
+ALTER TABLE ONLY hits ALTER COLUMN player_frequency SET DEFAULT nextval('hits_player_frequency_seq'::regclass);
+
+
+SET search_path = player2, pg_catalog;
+
+--
+-- Name: player_frequency; Type: DEFAULT; Schema: player2; Owner: laser-tag
+--
+
+ALTER TABLE ONLY hits ALTER COLUMN player_frequency SET DEFAULT nextval('hits_player_frequency_seq'::regclass);
+
+
+SET search_path = player3, pg_catalog;
+
+--
+-- Name: player_frequency; Type: DEFAULT; Schema: player3; Owner: laser-tag
+--
+
+ALTER TABLE ONLY hits ALTER COLUMN player_frequency SET DEFAULT nextval('hits_player_frequency_seq'::regclass);
+
+
+SET search_path = player4, pg_catalog;
+
+--
+-- Name: player_frequency; Type: DEFAULT; Schema: player4; Owner: laser-tag
+--
+
+ALTER TABLE ONLY hits ALTER COLUMN player_frequency SET DEFAULT nextval('hits_player_frequency_seq'::regclass);
+
+
+SET search_path = player5, pg_catalog;
+
+--
+-- Name: player_frequency; Type: DEFAULT; Schema: player5; Owner: laser-tag
+--
+
+ALTER TABLE ONLY hits ALTER COLUMN player_frequency SET DEFAULT nextval('hits_player_frequency_seq'::regclass);
+
+
+SET search_path = player6, pg_catalog;
+
+--
+-- Name: player_frequency; Type: DEFAULT; Schema: player6; Owner: laser-tag
+--
+
+ALTER TABLE ONLY hits ALTER COLUMN player_frequency SET DEFAULT nextval('hits_player_frequency_seq'::regclass);
+
+
+SET search_path = player7, pg_catalog;
+
+--
+-- Name: player_frequency; Type: DEFAULT; Schema: player7; Owner: laser-tag
+--
+
+ALTER TABLE ONLY hits ALTER COLUMN player_frequency SET DEFAULT nextval('hits_player_frequency_seq'::regclass);
+
+
+SET search_path = player8, pg_catalog;
+
+--
+-- Name: player_frequency; Type: DEFAULT; Schema: player8; Owner: laser-tag
+--
+
+ALTER TABLE ONLY hits ALTER COLUMN player_frequency SET DEFAULT nextval('hits_player_frequency_seq'::regclass);
+
+
+SET search_path = player9, pg_catalog;
+
+--
+-- Name: player_frequency; Type: DEFAULT; Schema: player9; Owner: laser-tag
+--
+
+ALTER TABLE ONLY hits ALTER COLUMN player_frequency SET DEFAULT nextval('hits_player_frequency_seq'::regclass);
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: player_frequency; Type: DEFAULT; Schema: public; Owner: laser-tag
+--
+
+ALTER TABLE ONLY shots ALTER COLUMN player_frequency SET DEFAULT nextval('shots_player_frequency_seq'::regclass);
+
+
+SET search_path = player1, pg_catalog;
+
+--
+-- Data for Name: hits; Type: TABLE DATA; Schema: player1; Owner: laser-tag
+--
+
+COPY hits (player_frequency, hits) FROM stdin;
+\.
+
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE SET; Schema: player1; Owner: laser-tag
+--
+
+SELECT pg_catalog.setval('hits_player_frequency_seq', 1, false);
+
+
+SET search_path = player10, pg_catalog;
+
+--
+-- Data for Name: hits; Type: TABLE DATA; Schema: player10; Owner: laser-tag
+--
+
+COPY hits (player_frequency, hits) FROM stdin;
+\.
+
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE SET; Schema: player10; Owner: laser-tag
+--
+
+SELECT pg_catalog.setval('hits_player_frequency_seq', 1, false);
+
+
+SET search_path = player2, pg_catalog;
+
+--
+-- Data for Name: hits; Type: TABLE DATA; Schema: player2; Owner: laser-tag
+--
+
+COPY hits (player_frequency, hits) FROM stdin;
+\.
+
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE SET; Schema: player2; Owner: laser-tag
+--
+
+SELECT pg_catalog.setval('hits_player_frequency_seq', 1, false);
+
+
+SET search_path = player3, pg_catalog;
+
+--
+-- Data for Name: hits; Type: TABLE DATA; Schema: player3; Owner: laser-tag
+--
+
+COPY hits (player_frequency, hits) FROM stdin;
+\.
+
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE SET; Schema: player3; Owner: laser-tag
+--
+
+SELECT pg_catalog.setval('hits_player_frequency_seq', 1, false);
+
+
+SET search_path = player4, pg_catalog;
+
+--
+-- Data for Name: hits; Type: TABLE DATA; Schema: player4; Owner: laser-tag
+--
+
+COPY hits (player_frequency, hits) FROM stdin;
+\.
+
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE SET; Schema: player4; Owner: laser-tag
+--
+
+SELECT pg_catalog.setval('hits_player_frequency_seq', 1, false);
+
+
+SET search_path = player5, pg_catalog;
+
+--
+-- Data for Name: hits; Type: TABLE DATA; Schema: player5; Owner: laser-tag
+--
+
+COPY hits (player_frequency, hits) FROM stdin;
+\.
+
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE SET; Schema: player5; Owner: laser-tag
+--
+
+SELECT pg_catalog.setval('hits_player_frequency_seq', 1, false);
+
+
+SET search_path = player6, pg_catalog;
+
+--
+-- Data for Name: hits; Type: TABLE DATA; Schema: player6; Owner: laser-tag
+--
+
+COPY hits (player_frequency, hits) FROM stdin;
+\.
+
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE SET; Schema: player6; Owner: laser-tag
+--
+
+SELECT pg_catalog.setval('hits_player_frequency_seq', 1, false);
+
+
+SET search_path = player7, pg_catalog;
+
+--
+-- Data for Name: hits; Type: TABLE DATA; Schema: player7; Owner: laser-tag
+--
+
+COPY hits (player_frequency, hits) FROM stdin;
+\.
+
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE SET; Schema: player7; Owner: laser-tag
+--
+
+SELECT pg_catalog.setval('hits_player_frequency_seq', 1, false);
+
+
+SET search_path = player8, pg_catalog;
+
+--
+-- Data for Name: hits; Type: TABLE DATA; Schema: player8; Owner: laser-tag
+--
+
+COPY hits (player_frequency, hits) FROM stdin;
+\.
+
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE SET; Schema: player8; Owner: laser-tag
+--
+
+SELECT pg_catalog.setval('hits_player_frequency_seq', 1, false);
+
+
+SET search_path = player9, pg_catalog;
+
+--
+-- Data for Name: hits; Type: TABLE DATA; Schema: player9; Owner: laser-tag
+--
+
+COPY hits (player_frequency, hits) FROM stdin;
+\.
+
+
+--
+-- Name: hits_player_frequency_seq; Type: SEQUENCE SET; Schema: player9; Owner: laser-tag
+--
+
+SELECT pg_catalog.setval('hits_player_frequency_seq', 1, false);
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for Name: shots; Type: TABLE DATA; Schema: public; Owner: laser-tag
+--
+
+COPY shots (player_frequency, shots) FROM stdin;
+1	0
+2	0
+4	0
+6	0
+7	0
+8	0
+9	0
+10	0
+3	-1
+5	3
+\.
+
+
+--
+-- Name: shots_player_frequency_seq; Type: SEQUENCE SET; Schema: public; Owner: laser-tag
+--
+
+SELECT pg_catalog.setval('shots_player_frequency_seq', 10, true);
+
+
+SET search_path = player1, pg_catalog;
+
+--
+-- Name: hits_pkey; Type: CONSTRAINT; Schema: player1; Owner: laser-tag
+--
+
+ALTER TABLE ONLY hits
+    ADD CONSTRAINT hits_pkey PRIMARY KEY (player_frequency);
+
+
+SET search_path = player10, pg_catalog;
+
+--
+-- Name: hits_pkey; Type: CONSTRAINT; Schema: player10; Owner: laser-tag
+--
+
+ALTER TABLE ONLY hits
+    ADD CONSTRAINT hits_pkey PRIMARY KEY (player_frequency);
+
+
+SET search_path = player2, pg_catalog;
+
+--
+-- Name: hits_pkey; Type: CONSTRAINT; Schema: player2; Owner: laser-tag
+--
+
+ALTER TABLE ONLY hits
+    ADD CONSTRAINT hits_pkey PRIMARY KEY (player_frequency);
+
+
+SET search_path = player3, pg_catalog;
+
+--
+-- Name: hits_pkey; Type: CONSTRAINT; Schema: player3; Owner: laser-tag
+--
+
+ALTER TABLE ONLY hits
+    ADD CONSTRAINT hits_pkey PRIMARY KEY (player_frequency);
+
+
+SET search_path = player4, pg_catalog;
+
+--
+-- Name: hits_pkey; Type: CONSTRAINT; Schema: player4; Owner: laser-tag
+--
+
+ALTER TABLE ONLY hits
+    ADD CONSTRAINT hits_pkey PRIMARY KEY (player_frequency);
+
+
+SET search_path = player5, pg_catalog;
+
+--
+-- Name: hits_pkey; Type: CONSTRAINT; Schema: player5; Owner: laser-tag
+--
+
+ALTER TABLE ONLY hits
+    ADD CONSTRAINT hits_pkey PRIMARY KEY (player_frequency);
+
+
+SET search_path = player6, pg_catalog;
+
+--
+-- Name: hits_pkey; Type: CONSTRAINT; Schema: player6; Owner: laser-tag
+--
+
+ALTER TABLE ONLY hits
+    ADD CONSTRAINT hits_pkey PRIMARY KEY (player_frequency);
+
+
+SET search_path = player7, pg_catalog;
+
+--
+-- Name: hits_pkey; Type: CONSTRAINT; Schema: player7; Owner: laser-tag
+--
+
+ALTER TABLE ONLY hits
+    ADD CONSTRAINT hits_pkey PRIMARY KEY (player_frequency);
+
+
+SET search_path = player8, pg_catalog;
+
+--
+-- Name: hits_pkey; Type: CONSTRAINT; Schema: player8; Owner: laser-tag
+--
+
+ALTER TABLE ONLY hits
+    ADD CONSTRAINT hits_pkey PRIMARY KEY (player_frequency);
+
+
+SET search_path = player9, pg_catalog;
+
+--
+-- Name: hits_pkey; Type: CONSTRAINT; Schema: player9; Owner: laser-tag
+--
+
+ALTER TABLE ONLY hits
+    ADD CONSTRAINT hits_pkey PRIMARY KEY (player_frequency);
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: shots_pkey; Type: CONSTRAINT; Schema: public; Owner: laser-tag
+--
+
+ALTER TABLE ONLY shots
+    ADD CONSTRAINT shots_pkey PRIMARY KEY (player_frequency);
+
+
+--
+-- Name: shots_table_trigger; Type: TRIGGER; Schema: public; Owner: laser-tag
+--
+
+CREATE TRIGGER shots_table_trigger AFTER UPDATE ON shots FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
