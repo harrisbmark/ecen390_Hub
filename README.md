@@ -24,7 +24,7 @@ CREATE TRIGGER shots_trigger AFTER UPDATE ON shots FOR EACH ROW EXECUTE PROCEDUR
 
 SQL script execution:
 ```bash
-psql -h localhost -d lasertag -U lasertag -p 5432 -a -q -f ./ecen390_lasertag/lasertag.sql
+psql -h localhost -d lasertag -U lasertag -p 5432 -a -q -f ./lasertag.sql
 ```
 
 ### Docker
