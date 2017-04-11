@@ -37,16 +37,16 @@ CREATE TRIGGER player8_shots_trigger AFTER UPDATE ON player8.hits FOR EACH ROW E
 CREATE TRIGGER player9_shots_trigger AFTER UPDATE ON player9.hits FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
 CREATE TRIGGER player10_shots_trigger AFTER UPDATE ON player10.hits FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
 
-INSERT INTO shots (shots) VALUE (0);
-INSERT INTO shots (shots) VALUE (0);
-INSERT INTO shots (shots) VALUE (0);
-INSERT INTO shots (shots) VALUE (0);
-INSERT INTO shots (shots) VALUE (0);
-INSERT INTO shots (shots) VALUE (0);
-INSERT INTO shots (shots) VALUE (0);
-INSERT INTO shots (shots) VALUE (0);
-INSERT INTO shots (shots) VALUE (0);
-INSERT INTO shots (shots) VALUE (0);
+INSERT INTO shots (shots) VALUES (0);
+INSERT INTO shots (shots) VALUES (0);
+INSERT INTO shots (shots) VALUES (0);
+INSERT INTO shots (shots) VALUES (0);
+INSERT INTO shots (shots) VALUES (0);
+INSERT INTO shots (shots) VALUES (0);
+INSERT INTO shots (shots) VALUES (0);
+INSERT INTO shots (shots) VALUES (0);
+INSERT INTO shots (shots) VALUES (0);
+INSERT INTO shots (shots) VALUES (0);
 
 INSERT INTO player1.hits (hits) VALUES (0);
 INSERT INTO player1.hits (hits) VALUES (0);
