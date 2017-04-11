@@ -28,16 +28,26 @@ psql -h localhost -d lasertag -U lasertag -p 5432 -a -q -f ./lasertag.sql
 ```
 
 ### Docker
-Delete all images and containers:
+Delete all images and containers (optional):
 ```bash
 docker rm $(docker ps -a -q)
 docker rmi $(docker images -q)
 ```
 
+Build the Dokcer image
+```bash
+docker build -t lasertag .
+```
+
+Run the image and create a container
+```bash
+docker run -P --name lasertag lasertag
+```
+
 Attach to Docker image:
 ```bash
 docker ps
-docker exec -i -t [container id here] /bin/bash
+docker exec -it --user [username] [container] /bin/bash
 ```
 
 ## Additional Sources

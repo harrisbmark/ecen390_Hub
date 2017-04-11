@@ -22,6 +22,9 @@ WORKDIR /var/www/
 RUN rm -rf html/ && \
     git clone https://github.com/harrisbmark/ecen390_lasertag.git && \
     mv ecen390_lasertag/ html/ && \
+    chown www-data:www-data ./ -R && \
+    find ./ -type d -exec chmod 755 {} \; && \
+    find ./ -type f -exec chmod 644 {} \; && \
     cd html && \
     cd ecen390_lasertag && \
     npm install
@@ -53,6 +56,9 @@ EXPOSE 5432
 
 # Add VOLUMEs to allow backup of config, logs and databases
 VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
+
+# Change to root user
+USER root
 
 # Set the default command to run when starting the container
 CMD ["/usr/lib/postgresql/9.5/bin/postgres", "-D", "/var/lib/postgresql/9.5/main", "-c", "config_file=/etc/postgresql/9.5/main/postgresql.conf"]
