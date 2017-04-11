@@ -1,5 +1,7 @@
+-- Create the shots table
 CREATE TABLE shots (player_frequency SERIAL NOT NULL PRIMARY KEY, shots integer);
 
+-- Create all the schemas for the different players (used for the hit tables)
 CREATE SCHEMA player1;
 CREATE SCHEMA player2;
 CREATE SCHEMA player3;
@@ -11,6 +13,7 @@ CREATE SCHEMA player8;
 CREATE SCHEMA player9;
 CREATE SCHEMA player10;
 
+-- Create all the hit tables for each player
 CREATE TABLE player1.hits (player_frequency SERIAL NOT NULL PRIMARY KEY, hits integer);
 CREATE TABLE player2.hits (player_frequency SERIAL NOT NULL PRIMARY KEY, hits integer);
 CREATE TABLE player3.hits (player_frequency SERIAL NOT NULL PRIMARY KEY, hits integer);
@@ -22,10 +25,13 @@ CREATE TABLE player8.hits (player_frequency SERIAL NOT NULL PRIMARY KEY, hits in
 CREATE TABLE player9.hits (player_frequency SERIAL NOT NULL PRIMARY KEY, hits integer);
 CREATE TABLE player10.hits (player_frequency SERIAL NOT NULL PRIMARY KEY, hits integer);
 
+-- Create the function to be used by the triggers (announces a 'watcher' for NodeJS socekt)
 CREATE FUNCTION notify_trigger() RETURNS trigger AS $$ DECLARE BEGIN PERFORM pg_notify('watchers', row_to_json(NEW)::text); RETURN new; END; $$ LANGUAGE plpgsql;
 
+-- Create trigger for the shots table
 CREATE TRIGGER shots_table_trigger AFTER UPDATE ON shots FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
 
+-- Create all the triggers for the player hit tables
 CREATE TRIGGER player1_shots_trigger AFTER UPDATE ON player1.hits FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
 CREATE TRIGGER player2_shots_trigger AFTER UPDATE ON player2.hits FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
 CREATE TRIGGER player3_shots_trigger AFTER UPDATE ON player3.hits FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
@@ -37,6 +43,7 @@ CREATE TRIGGER player8_shots_trigger AFTER UPDATE ON player8.hits FOR EACH ROW E
 CREATE TRIGGER player9_shots_trigger AFTER UPDATE ON player9.hits FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
 CREATE TRIGGER player10_shots_trigger AFTER UPDATE ON player10.hits FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
 
+-- Insert 10 values into the shots table
 INSERT INTO shots (shots) VALUES (0);
 INSERT INTO shots (shots) VALUES (0);
 INSERT INTO shots (shots) VALUES (0);
@@ -48,6 +55,7 @@ INSERT INTO shots (shots) VALUES (0);
 INSERT INTO shots (shots) VALUES (0);
 INSERT INTO shots (shots) VALUES (0);
 
+-- Insert 10 values into each player hit table
 INSERT INTO player1.hits (hits) VALUES (0);
 INSERT INTO player1.hits (hits) VALUES (0);
 INSERT INTO player1.hits (hits) VALUES (0);
