@@ -63,172 +63,184 @@
     </main>
   </body>
   <script>
-    Chart.defaults.global.legend.display = false;
-
-    var hitChartData = new Array(10).fill(0);
-    var ctx_hitChart = $("#hitChart");
-    var hitChart = new Chart(ctx_hitChart,
+    $(function()
     {
-      type: "bar",
-      data: {
-        labels: ["Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6", "Player 7", "Player 8", "Player 9", "Player 10"],
-        datasets: [{
-          label: "Number of Hits Taken",
-          data: hitChartData,
-          backgroundColor: [
-            "rgba(255, 99, 132, 0.2)",
-            "rgba(54, 162, 235, 0.2)",
-            "rgba(255, 206, 86, 0.2)",
-            "rgba(75, 192, 192, 0.2)",
-            "rgba(153, 102, 255, 0.2)",
-            "rgba(255, 159, 64, 0.2)",
-            "rgba(65, 131, 126, 0.2)",
-            "rgba(167, 84, 134, 0.2)",
-            "rgba(180, 203, 101, 0.2)",
-            "rgba(212, 131, 106, 0.2)"
-          ],
-          borderColor: [
-            "rgba(255,99,132,1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-            "rgba(75, 192, 192, 1)",
-            "rgba(153, 102, 255, 1)",
-            "rgba(255, 159, 64, 1)",
-            "rgba(65, 131, 126, 1)",
-            "rgba(167, 84, 134, 1)",
-            "rgba(180, 203, 101, 1)",
-            "rgba(212, 131, 106, 1)"
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero:true
-            }
-          }]
-        }
-      }
-    });
+      Chart.defaults.global.legend.display = false;
 
-    var shotChartData = new Array(10).fill(0);
-    var ctx_shotChart = $("#shotChart");
-    var shotChart = new Chart(ctx_shotChart,
-    {
-      type: "bar",
-      data: {
-        labels: ["Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6", "Player 7", "Player 8", "Player 9", "Player 10"],
-        datasets: [{
-          label: "Number of Shots Fired",
-          data: hitChartData,
-          backgroundColor: [
-            "rgba(255, 99, 132, 0.2)",
-            "rgba(54, 162, 235, 0.2)",
-            "rgba(255, 206, 86, 0.2)",
-            "rgba(75, 192, 192, 0.2)",
-            "rgba(153, 102, 255, 0.2)",
-            "rgba(255, 159, 64, 0.2)",
-            "rgba(65, 131, 126, 0.2)",
-            "rgba(167, 84, 134, 0.2)",
-            "rgba(180, 203, 101, 0.2)",
-            "rgba(212, 131, 106, 0.2)"
-          ],
-          borderColor: [
-            "rgba(255,99,132,1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-            "rgba(75, 192, 192, 1)",
-            "rgba(153, 102, 255, 1)",
-            "rgba(255, 159, 64, 1)",
-            "rgba(65, 131, 126, 1)",
-            "rgba(167, 84, 134, 1)",
-            "rgba(180, 203, 101, 1)",
-            "rgba(212, 131, 106, 1)"
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero:true
-            }
+      var hitChartData = new Array(10).fill(0);
+      var ctx_hitChart = $("#hitChart");
+      var hitChart = new Chart(ctx_hitChart,
+      {
+        type: "bar",
+        data: {
+          labels: ["Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6", "Player 7", "Player 8", "Player 9", "Player 10"],
+          datasets: [{
+            label: "Number of Hits Taken",
+            data: hitChartData,
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(255, 206, 86, 0.2)",
+              "rgba(75, 192, 192, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+              "rgba(255, 159, 64, 0.2)",
+              "rgba(65, 131, 126, 0.2)",
+              "rgba(167, 84, 134, 0.2)",
+              "rgba(180, 203, 101, 0.2)",
+              "rgba(212, 131, 106, 0.2)"
+            ],
+            borderColor: [
+              "rgba(255,99,132,1)",
+              "rgba(54, 162, 235, 1)",
+              "rgba(255, 206, 86, 1)",
+              "rgba(75, 192, 192, 1)",
+              "rgba(153, 102, 255, 1)",
+              "rgba(255, 159, 64, 1)",
+              "rgba(65, 131, 126, 1)",
+              "rgba(167, 84, 134, 1)",
+              "rgba(180, 203, 101, 1)",
+              "rgba(212, 131, 106, 1)"
+            ],
+            borderWidth: 1
           }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          }
         }
-      }
-    });
+      });
 
-    var takedownChartData = new Array(10).fill(0);
-    var ctx_takedownChart = $("#takeDownChart");
-    var takedownChart = new Chart(ctx_takedownChart,
-    {
-      type: "bar",
-      data: {
-        labels: ["Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6", "Player 7", "Player 8", "Player 9", "Player 10"],
-        datasets: [{
-          label: "Number of Hits Given (Take-downs)",
-          data: hitChartData,
-          backgroundColor: [
-            "rgba(255, 99, 132, 0.2)",
-            "rgba(54, 162, 235, 0.2)",
-            "rgba(255, 206, 86, 0.2)",
-            "rgba(75, 192, 192, 0.2)",
-            "rgba(153, 102, 255, 0.2)",
-            "rgba(255, 159, 64, 0.2)",
-            "rgba(65, 131, 126, 0.2)",
-            "rgba(167, 84, 134, 0.2)",
-            "rgba(180, 203, 101, 0.2)",
-            "rgba(212, 131, 106, 0.2)"
-          ],
-          borderColor: [
-            "rgba(255,99,132,1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-            "rgba(75, 192, 192, 1)",
-            "rgba(153, 102, 255, 1)",
-            "rgba(255, 159, 64, 1)",
-            "rgba(65, 131, 126, 1)",
-            "rgba(167, 84, 134, 1)",
-            "rgba(180, 203, 101, 1)",
-            "rgba(212, 131, 106, 1)"
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero:true
-            }
+      var shotChartData = new Array(10).fill(0);
+      var ctx_shotChart = $("#shotChart");
+      var shotChart = new Chart(ctx_shotChart,
+      {
+        type: "bar",
+        data: {
+          labels: ["Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6", "Player 7", "Player 8", "Player 9", "Player 10"],
+          datasets: [{
+            label: "Number of Shots Fired",
+            data: hitChartData,
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(255, 206, 86, 0.2)",
+              "rgba(75, 192, 192, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+              "rgba(255, 159, 64, 0.2)",
+              "rgba(65, 131, 126, 0.2)",
+              "rgba(167, 84, 134, 0.2)",
+              "rgba(180, 203, 101, 0.2)",
+              "rgba(212, 131, 106, 0.2)"
+            ],
+            borderColor: [
+              "rgba(255,99,132,1)",
+              "rgba(54, 162, 235, 1)",
+              "rgba(255, 206, 86, 1)",
+              "rgba(75, 192, 192, 1)",
+              "rgba(153, 102, 255, 1)",
+              "rgba(255, 159, 64, 1)",
+              "rgba(65, 131, 126, 1)",
+              "rgba(167, 84, 134, 1)",
+              "rgba(180, 203, 101, 1)",
+              "rgba(212, 131, 106, 1)"
+            ],
+            borderWidth: 1
           }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          }
         }
-      }
+      });
+
+      var takedownChartData = new Array(10).fill(0);
+      var ctx_takedownChart = $("#takeDownChart");
+      var takedownChart = new Chart(ctx_takedownChart,
+      {
+        type: "bar",
+        data: {
+          labels: ["Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6", "Player 7", "Player 8", "Player 9", "Player 10"],
+          datasets: [{
+            label: "Number of Hits Given (Take-downs)",
+            data: takedownChartData,
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(255, 206, 86, 0.2)",
+              "rgba(75, 192, 192, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+              "rgba(255, 159, 64, 0.2)",
+              "rgba(65, 131, 126, 0.2)",
+              "rgba(167, 84, 134, 0.2)",
+              "rgba(180, 203, 101, 0.2)",
+              "rgba(212, 131, 106, 0.2)"
+            ],
+            borderColor: [
+              "rgba(255,99,132,1)",
+              "rgba(54, 162, 235, 1)",
+              "rgba(255, 206, 86, 1)",
+              "rgba(75, 192, 192, 1)",
+              "rgba(153, 102, 255, 1)",
+              "rgba(255, 159, 64, 1)",
+              "rgba(65, 131, 126, 1)",
+              "rgba(167, 84, 134, 1)",
+              "rgba(180, 203, 101, 1)",
+              "rgba(212, 131, 106, 1)"
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          }
+        }
+      });
     });
 
     $(function()
     {
       var socket = io();
 
-      socket.on("takedown", function(player_number, takedowns)
+      socket.on("connected", function(data)
       {
-        takedownChart.data.datasets[0].data[player_number] = takedowns;
-        takedownChart.update();
-      });
-
-      socket.on("hit", function(player_number, hits)
-      {
-        hitChart.data.datasets[0].data[player_number] = hits;
-        hitChart.update();
+        console.log("connected", "ready", data);
+        socket.emit("ready", {});
       });
 
       socket.on("shot", function(player_number, shots)
       {
-        shotChart.data.datasets[0].data[player_number] = shots;
-        shotChart.update();
+        console.log("shot", player_number, shots, shotChart);
+        /*shotChart.datasets[0].bars[player_number].value = shots;
+        shotChart.update();*/
+      });
+
+      socket.on("hit", function(player_number, hits)
+      {
+        console.log("hit", player_number, hits);
+        /*hitChart.data.datasets[0].data[player_number] = hits;
+        hitChart.update();*/
+      });
+
+      socket.on("takedown", function(player_number, takedowns)
+      {
+        console.log("takedown", player_number, takedowns);
+        /*takedownChart.data.datasets[0].data[player_number] = takedowns;
+        takedownChart.update();*/
       });
     });
   </script>

@@ -3,7 +3,6 @@ var http = require("http").Server(app);
 var pg = require("pg");
 var io = require("socket.io")(http);
 
-//var pg_connection = "tcp://laser-tag:bgt56yhn@localhost/laser-tag";
 var pg_connection = "tcp://lasertag:bgt56yhn@localhost/lasertag";
 var pg_client = new pg.Client(pg_connection);
 
@@ -17,29 +16,40 @@ app.get("/", function(req, res){
 
 io.on("connection", function(socket)
 {
-  pg_client.on("notification", function(title)
+  socket.emit("connected", {connected: true});
+
+  socket.on("ready", function(data)
   {
-    console.log(title);
+    console.log("ready");
 
-    if (JSON.parse(title.payload).takedowns !== undefined && JSON.parse(title.payload).player_frequency !== undefined)
+    pg_client.on("notification", function(title)
     {
-      io.emit("takedown", JSON.parse(title.payload).player_frequency - 1, JSON.parse(title.payload).takedowns);
-    }
+      // Used for debugging the grabbed notification.
+      console.log("notification", title.payload);
 
-    else if (JSON.parse(title.payload).hits !== undefined && JSON.parse(title.payload).player_frequency !== undefined)
-    {
-      io.emit("hit", JSON.parse(title.payload).player_frequency - 1, JSON.parse(title.payload).hits);
-    }
+      if (JSON.parse(title.payload).takedowns !== undefined && JSON.parse(title.payload).player_frequency !== undefined)
+      {
+        console.log("takedown");
+        io.emit("takedown", JSON.parse(title.payload).player_frequency - 1, JSON.parse(title.payload).takedowns);
+      }
 
-    else if (JSON.parse(title.payload).shots !== undefined && JSON.parse(title.payload).player_frequency !== undefined)
-    {
-      io.emit("shot", JSON.parse(title.payload).player_frequency - 1, JSON.parse(title.payload).shots);
-    }
+      else if (JSON.parse(title.payload).hits !== undefined && JSON.parse(title.payload).player_frequency !== undefined)
+      {
+        console.log("hit");
+        io.emit("hit", JSON.parse(title.payload).player_frequency - 1, JSON.parse(title.payload).hits);
+      }
 
-    else
-    {
-      console.log("Error!", title);
-    }
+      else if (JSON.parse(title.payload).shots !== undefined && JSON.parse(title.payload).player_frequency !== undefined)
+      {
+        console.log("shot");
+        io.emit("shot", JSON.parse(title.payload).player_frequency - 1, JSON.parse(title.payload).shots);
+      }
+
+      else
+      {
+        console.log("Error!", title);
+      }
+    });
   });
 });
 
