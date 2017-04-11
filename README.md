@@ -2,6 +2,8 @@
 
 ## Statements for Reference
 ### PostgreSQL
+
+
 Repeat this 10 times to create the player 1-10 hit tables.
 ```sql
 CREATE TABLE playerX.hits (player_frequency SERIAL NOT NULL PRIMARY KEY, hits integer);
