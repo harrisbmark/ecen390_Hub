@@ -36,3 +36,138 @@ CREATE TRIGGER player7_shots_trigger AFTER UPDATE ON player7.hits FOR EACH ROW E
 CREATE TRIGGER player8_shots_trigger AFTER UPDATE ON player8.hits FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
 CREATE TRIGGER player9_shots_trigger AFTER UPDATE ON player9.hits FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
 CREATE TRIGGER player10_shots_trigger AFTER UPDATE ON player10.hits FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
+
+INSERT INTO shots (shots) VALUE (0);
+INSERT INTO shots (shots) VALUE (0);
+INSERT INTO shots (shots) VALUE (0);
+INSERT INTO shots (shots) VALUE (0);
+INSERT INTO shots (shots) VALUE (0);
+INSERT INTO shots (shots) VALUE (0);
+INSERT INTO shots (shots) VALUE (0);
+INSERT INTO shots (shots) VALUE (0);
+INSERT INTO shots (shots) VALUE (0);
+INSERT INTO shots (shots) VALUE (0);
+
+INSERT INTO player1.hits (hits) VALUES (0);
+INSERT INTO player1.hits (hits) VALUES (0);
+INSERT INTO player1.hits (hits) VALUES (0);
+INSERT INTO player1.hits (hits) VALUES (0);
+INSERT INTO player1.hits (hits) VALUES (0);
+INSERT INTO player1.hits (hits) VALUES (0);
+INSERT INTO player1.hits (hits) VALUES (0);
+INSERT INTO player1.hits (hits) VALUES (0);
+INSERT INTO player1.hits (hits) VALUES (0);
+INSERT INTO player1.hits (hits) VALUES (0);
+
+INSERT INTO player2.hits (hits) VALUES (0);
+INSERT INTO player2.hits (hits) VALUES (0);
+INSERT INTO player2.hits (hits) VALUES (0);
+INSERT INTO player2.hits (hits) VALUES (0);
+INSERT INTO player2.hits (hits) VALUES (0);
+INSERT INTO player2.hits (hits) VALUES (0);
+INSERT INTO player2.hits (hits) VALUES (0);
+INSERT INTO player2.hits (hits) VALUES (0);
+INSERT INTO player2.hits (hits) VALUES (0);
+INSERT INTO player2.hits (hits) VALUES (0);
+
+INSERT INTO player3.hits (hits) VALUES (0);
+INSERT INTO player3.hits (hits) VALUES (0);
+INSERT INTO player3.hits (hits) VALUES (0);
+INSERT INTO player3.hits (hits) VALUES (0);
+INSERT INTO player3.hits (hits) VALUES (0);
+INSERT INTO player3.hits (hits) VALUES (0);
+INSERT INTO player3.hits (hits) VALUES (0);
+INSERT INTO player3.hits (hits) VALUES (0);
+INSERT INTO player3.hits (hits) VALUES (0);
+INSERT INTO player3.hits (hits) VALUES (0);
+
+INSERT INTO player4.hits (hits) VALUES (0);
+INSERT INTO player4.hits (hits) VALUES (0);
+INSERT INTO player4.hits (hits) VALUES (0);
+INSERT INTO player4.hits (hits) VALUES (0);
+INSERT INTO player4.hits (hits) VALUES (0);
+INSERT INTO player4.hits (hits) VALUES (0);
+INSERT INTO player4.hits (hits) VALUES (0);
+INSERT INTO player4.hits (hits) VALUES (0);
+INSERT INTO player4.hits (hits) VALUES (0);
+INSERT INTO player4.hits (hits) VALUES (0);
+
+INSERT INTO player5.hits (hits) VALUES (0);
+INSERT INTO player5.hits (hits) VALUES (0);
+INSERT INTO player5.hits (hits) VALUES (0);
+INSERT INTO player5.hits (hits) VALUES (0);
+INSERT INTO player5.hits (hits) VALUES (0);
+INSERT INTO player5.hits (hits) VALUES (0);
+INSERT INTO player5.hits (hits) VALUES (0);
+INSERT INTO player5.hits (hits) VALUES (0);
+INSERT INTO player5.hits (hits) VALUES (0);
+INSERT INTO player5.hits (hits) VALUES (0);
+
+INSERT INTO player6.hits (hits) VALUES (0);
+INSERT INTO player6.hits (hits) VALUES (0);
+INSERT INTO player6.hits (hits) VALUES (0);
+INSERT INTO player6.hits (hits) VALUES (0);
+INSERT INTO player6.hits (hits) VALUES (0);
+INSERT INTO player6.hits (hits) VALUES (0);
+INSERT INTO player6.hits (hits) VALUES (0);
+INSERT INTO player6.hits (hits) VALUES (0);
+INSERT INTO player6.hits (hits) VALUES (0);
+INSERT INTO player6.hits (hits) VALUES (0);
+
+INSERT INTO player7.hits (hits) VALUES (0);
+INSERT INTO player7.hits (hits) VALUES (0);
+INSERT INTO player7.hits (hits) VALUES (0);
+INSERT INTO player7.hits (hits) VALUES (0);
+INSERT INTO player7.hits (hits) VALUES (0);
+INSERT INTO player7.hits (hits) VALUES (0);
+INSERT INTO player7.hits (hits) VALUES (0);
+INSERT INTO player7.hits (hits) VALUES (0);
+INSERT INTO player7.hits (hits) VALUES (0);
+INSERT INTO player7.hits (hits) VALUES (0);
+
+INSERT INTO player8.hits (hits) VALUES (0);
+INSERT INTO player8.hits (hits) VALUES (0);
+INSERT INTO player8.hits (hits) VALUES (0);
+INSERT INTO player8.hits (hits) VALUES (0);
+INSERT INTO player8.hits (hits) VALUES (0);
+INSERT INTO player8.hits (hits) VALUES (0);
+INSERT INTO player8.hits (hits) VALUES (0);
+INSERT INTO player8.hits (hits) VALUES (0);
+INSERT INTO player8.hits (hits) VALUES (0);
+INSERT INTO player8.hits (hits) VALUES (0);
+
+INSERT INTO player9.hits (hits) VALUES (0);
+INSERT INTO player9.hits (hits) VALUES (0);
+INSERT INTO player9.hits (hits) VALUES (0);
+INSERT INTO player9.hits (hits) VALUES (0);
+INSERT INTO player9.hits (hits) VALUES (0);
+INSERT INTO player9.hits (hits) VALUES (0);
+INSERT INTO player9.hits (hits) VALUES (0);
+INSERT INTO player9.hits (hits) VALUES (0);
+INSERT INTO player9.hits (hits) VALUES (0);
+INSERT INTO player9.hits (hits) VALUES (0);
+
+INSERT INTO player10.hits (hits) VALUES (0);
+INSERT INTO player10.hits (hits) VALUES (0);
+INSERT INTO player10.hits (hits) VALUES (0);
+INSERT INTO player10.hits (hits) VALUES (0);
+INSERT INTO player10.hits (hits) VALUES (0);
+INSERT INTO player10.hits (hits) VALUES (0);
+INSERT INTO player10.hits (hits) VALUES (0);
+INSERT INTO player10.hits (hits) VALUES (0);
+INSERT INTO player10.hits (hits) VALUES (0);
+INSERT INTO player10.hits (hits) VALUES (0);
+
+-- SELECT all the tables to check that they are correct
+SELECT * FROM shots;
+
+SELECT * FROM player1.hits;
+SELECT * FROM player2.hits;
+SELECT * FROM player3.hits;
+SELECT * FROM player4.hits;
+SELECT * FROM player5.hits;
+SELECT * FROM player6.hits;
+SELECT * FROM player7.hits;
+SELECT * FROM player8.hits;
+SELECT * FROM player9.hits;
+SELECT * FROM player10.hits;
