@@ -2,20 +2,42 @@
 
 ## Statements for Reference
 ### PostgreSQL
+Repeat this 10 times to create the player 1-10 hit tables.
+```sql
+CREATE TABLE playerX.hits (player_frequency SERIAL NOT NULL PRIMARY KEY, hits integer);
 ```
+
+Create the function that will be ran by the triggers (notify for NodeJS sockets):
+```sql
 CREATE FUNCTION notify_trigger() RETURNS trigger AS $$ DECLARE BEGIN PERFORM pg_notify('watchers', row_to_json(NEW)::text); RETURN new; END; $$ LANGUAGE plpgsql;
 ```
 
-```
-CREATE TABLE player1.hits (player_frequency SERIAL NOT NULL PRIMARY KEY, hits integer);
-```
-
-```
-CREATE TRIGGER hits_table_trigger AFTER UPDATE ON hits FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
+Trigger for the playerX hits table:
+```sql
+CREATE TRIGGER playerX.hits_trigger AFTER UPDATE ON playerX.hits FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
 ```
 
+Trigger for the shots table:
+```sql
+CREATE TRIGGER shots_trigger AFTER UPDATE ON shots FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
 ```
-CREATE TRIGGER shots_table_trigger AFTER UPDATE ON shots FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
+
+SQL script execution:
+```bash
+psql -h localhost -d lasertag -U lasertag -p 5432 -a -q -f ./ecen390_lasertag/lasertag.sql
+```
+
+### Docker
+Delete all images and containers:
+```bash
+docker rm $(docker ps -a -q)
+docker rmi $(docker images -q)
+```
+
+Attach to Docker image:
+```bash
+docker ps
+docker exec -i -t [container id here] /bin/bash
 ```
 
 ## Additional Sources
