@@ -19,7 +19,14 @@ io.on("connection", function(socket)
 {
   pg_client.on("notification", function(title)
   {
-    if (JSON.parse(title.payload).hits !== undefined && JSON.parse(title.payload).player_frequency !== undefined)
+    console.log(title);
+
+    if (JSON.parse(title.payload).takedowns !== undefined && JSON.parse(title.payload).player_frequency !== undefined)
+    {
+      io.emit("takedown", JSON.parse(title.payload).player_frequency - 1, JSON.parse(title.payload).takedowns);
+    }
+
+    else if (JSON.parse(title.payload).hits !== undefined && JSON.parse(title.payload).player_frequency !== undefined)
     {
       io.emit("hit", JSON.parse(title.payload).player_frequency - 1, JSON.parse(title.payload).hits);
     }
