@@ -236,10 +236,10 @@ CREATE FUNCTION get_takedown_value(player_frequency integer) RETURNS TABLE (fc j
 CREATE FUNCTION get_hit_value(player_frequency integer) RETURNS TABLE (fc json) AS $$ BEGIN IF player_frequency = 1 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'hits', player_1) FROM hits; ELSIF player_frequency = 2 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'hits', player_2) FROM hits; ELSIF player_frequency = 3 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'hits', player_3) FROM hits; ELSIF player_frequency = 4 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'hits', player_4) FROM hits; ELSIF player_frequency = 5 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'hits', player_5) FROM hits; ELSIF player_frequency = 6 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'hits', player_6) FROM hits; ELSIF player_frequency = 7 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'hits', player_7) FROM hits; ELSIF player_frequency = 8 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'hits', player_8) FROM hits; ELSIF player_frequency = 9 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'hits', player_9) FROM hits; ELSIF player_frequency = 10 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'hits', player_10) FROM hits; ELSE RETURN QUERY SELECT json_build_object('player_frequency', 0, 'hits', 0) FROM hits; END IF; RETURN; END; $$ LANGUAGE plpgsql;
 
 -- Create function to update the takedown table
-CREATE FUNCTION notify_takedown_table() RETURNS trigger AS $$ DECLARE BEGIN PERFORM pg_notify('watchers', get_takedown_value(NEW.player_frequency)::text); RETURN NULL; END; $$ LANGUAGE plpgsql;
+CREATE FUNCTION notify_takedown_table(hit_player integer) RETURNS trigger AS $$ DECLARE BEGIN PERFORM pg_notify('watchers', get_takedown_value(hit_player)::text); RETURN NULL; END; $$ LANGUAGE plpgsql;
 
 -- Create function to update the hit table
-CREATE FUNCTION notify_hit_table() RETURNS trigger AS $$ DECLARE BEGIN PERFORM pg_notify('watchers', get_hit_value(NEW.player_frequency)::text); RETURN NULL; END; $$ LANGUAGE plpgsql;
+CREATE FUNCTION notify_hit_table(hit_player integer) RETURNS trigger AS $$ DECLARE BEGIN PERFORM pg_notify('watchers', get_hit_value(hit_player)::text); RETURN NULL; END; $$ LANGUAGE plpgsql;
 
 -- Create the function to be used by the triggers on tables (announces a 'watcher' for NodeJS socekt)
 CREATE FUNCTION notify_shot_table() RETURNS trigger AS $$ DECLARE BEGIN PERFORM pg_notify('watchers', row_to_json(NEW)::text); RETURN NULL; END; $$ LANGUAGE plpgsql;
@@ -248,28 +248,28 @@ CREATE FUNCTION notify_shot_table() RETURNS trigger AS $$ DECLARE BEGIN PERFORM 
 CREATE TRIGGER shots_table_trigger AFTER UPDATE ON shots FOR EACH ROW EXECUTE PROCEDURE notify_shot_table();
 
 -- Create all the triggers for the player takedown tables
-CREATE TRIGGER player1_shots_trigger AFTER UPDATE ON player1.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
-CREATE TRIGGER player2_shots_trigger AFTER UPDATE ON player2.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
-CREATE TRIGGER player3_shots_trigger AFTER UPDATE ON player3.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
-CREATE TRIGGER player4_shots_trigger AFTER UPDATE ON player4.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
-CREATE TRIGGER player5_shots_trigger AFTER UPDATE ON player5.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
-CREATE TRIGGER player6_shots_trigger AFTER UPDATE ON player6.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
-CREATE TRIGGER player7_shots_trigger AFTER UPDATE ON player7.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
-CREATE TRIGGER player8_shots_trigger AFTER UPDATE ON player8.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
-CREATE TRIGGER player9_shots_trigger AFTER UPDATE ON player9.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
-CREATE TRIGGER player10_shots_trigger AFTER UPDATE ON player10.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
+CREATE TRIGGER player1_takedown_trigger AFTER UPDATE ON player1.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
+CREATE TRIGGER player2_takedown_trigger AFTER UPDATE ON player2.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
+CREATE TRIGGER player3_takedown_trigger AFTER UPDATE ON player3.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
+CREATE TRIGGER player4_takedown_trigger AFTER UPDATE ON player4.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
+CREATE TRIGGER player5_takedown_trigger AFTER UPDATE ON player5.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
+CREATE TRIGGER player6_takedown_trigger AFTER UPDATE ON player6.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
+CREATE TRIGGER player7_takedown_trigger AFTER UPDATE ON player7.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
+CREATE TRIGGER player8_takedown_trigger AFTER UPDATE ON player8.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
+CREATE TRIGGER player9_takedown_trigger AFTER UPDATE ON player9.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
+CREATE TRIGGER player10_takedown_trigger AFTER UPDATE ON player10.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
 
 -- Create all the triggers for the player hit tables
-CREATE TRIGGER player1_hits_trigger AFTER UPDATE ON player1.hits FOR EACH ROW EXECUTE PROCEDURE notify_hit_table();
-CREATE TRIGGER player2_hits_trigger AFTER UPDATE ON player2.hits FOR EACH ROW EXECUTE PROCEDURE notify_hit_table();
-CREATE TRIGGER player3_hits_trigger AFTER UPDATE ON player3.hits FOR EACH ROW EXECUTE PROCEDURE notify_hit_table();
-CREATE TRIGGER player4_hits_trigger AFTER UPDATE ON player4.hits FOR EACH ROW EXECUTE PROCEDURE notify_hit_table();
-CREATE TRIGGER player5_hits_trigger AFTER UPDATE ON player5.hits FOR EACH ROW EXECUTE PROCEDURE notify_hit_table();
-CREATE TRIGGER player6_hits_trigger AFTER UPDATE ON player6.hits FOR EACH ROW EXECUTE PROCEDURE notify_hit_table();
-CREATE TRIGGER player7_hits_trigger AFTER UPDATE ON player7.hits FOR EACH ROW EXECUTE PROCEDURE notify_hit_table();
-CREATE TRIGGER player8_hits_trigger AFTER UPDATE ON player8.hits FOR EACH ROW EXECUTE PROCEDURE notify_hit_table();
-CREATE TRIGGER player9_hits_trigger AFTER UPDATE ON player9.hits FOR EACH ROW EXECUTE PROCEDURE notify_hit_table();
-CREATE TRIGGER player10_hits_trigger AFTER UPDATE ON player10.hits FOR EACH ROW EXECUTE PROCEDURE notify_hit_table();
+CREATE TRIGGER player1_hits_trigger AFTER UPDATE ON player1.hits FOR EACH ROW EXECUTE PROCEDURE notify_hit_table(1);
+CREATE TRIGGER player2_hits_trigger AFTER UPDATE ON player2.hits FOR EACH ROW EXECUTE PROCEDURE notify_hit_table(2);
+CREATE TRIGGER player3_hits_trigger AFTER UPDATE ON player3.hits FOR EACH ROW EXECUTE PROCEDURE notify_hit_table(3);
+CREATE TRIGGER player4_hits_trigger AFTER UPDATE ON player4.hits FOR EACH ROW EXECUTE PROCEDURE notify_hit_table(4);
+CREATE TRIGGER player5_hits_trigger AFTER UPDATE ON player5.hits FOR EACH ROW EXECUTE PROCEDURE notify_hit_table(5);
+CREATE TRIGGER player6_hits_trigger AFTER UPDATE ON player6.hits FOR EACH ROW EXECUTE PROCEDURE notify_hit_table(6);
+CREATE TRIGGER player7_hits_trigger AFTER UPDATE ON player7.hits FOR EACH ROW EXECUTE PROCEDURE notify_hit_table(7);
+CREATE TRIGGER player8_hits_trigger AFTER UPDATE ON player8.hits FOR EACH ROW EXECUTE PROCEDURE notify_hit_table(8);
+CREATE TRIGGER player9_hits_trigger AFTER UPDATE ON player9.hits FOR EACH ROW EXECUTE PROCEDURE notify_hit_table(9);
+CREATE TRIGGER player10_hits_trigger AFTER UPDATE ON player10.hits FOR EACH ROW EXECUTE PROCEDURE notify_hit_table(10);
 
 -- Insert 10 values into the shots table
 INSERT INTO shots (shots) VALUES (0);
