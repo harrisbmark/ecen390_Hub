@@ -1,5 +1,3 @@
-psql -d lasertag;
-
 CREATE TABLE shots (player_frequency SERIAL NOT NULL PRIMARY KEY, shots integer);
 
 CREATE SCHEMA player1;
