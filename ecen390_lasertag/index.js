@@ -8,6 +8,9 @@ var pg_client = new pg.Client(pg_connection);
 
 pg_client.connect();
 
+var pg_base_shots_select = pg_client.query("SELECT * FROM shots;");
+var pg_base_hits_select = pg_client.query("SELECT * FROM hits;");
+var pg_base_takedowns_select = pg_client.query("SELECT * FROM takedown;");
 var pg_query = pg_client.query("LISTEN watchers");
 
 app.get("/", function(req, res){
