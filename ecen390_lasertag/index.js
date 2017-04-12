@@ -8,14 +8,19 @@ var pg_client = new pg.Client(pg_connection);
 
 pg_client.connect();
 
-var pg_base_shots_select = pg_client.query("SELECT * FROM shots;");
-var pg_base_hits_select = pg_client.query("SELECT * FROM hits;");
-var pg_base_takedowns_select = pg_client.query("SELECT * FROM takedown;");
-var pg_query = pg_client.query("LISTEN watchers");
+app.use(express.bodyParser());
 
-app.get("/", function(req, res){
+app.post("/", function(request, response)
+{
+  console.log(request);
+});
+
+app.get("/", function(req, res)
+{
   res.sendFile(__dirname + "/index.html");
 });
+
+var pg_query = pg_client.query("LISTEN watchers");
 
 io.on("connection", function(socket)
 {
@@ -56,6 +61,7 @@ io.on("connection", function(socket)
   });
 });
 
-http.listen(3000, function(){
+http.listen(3000, function()
+{
   console.log("Listening on *:3000");
 });
