@@ -23,28 +23,26 @@ app.get("/", function(req, res)
 
 app.post("/", function(req, res)
 {
-  //console.log(req.body);
-  if (req.body.action !== undefined)
+  if (req.body.hit !== undefined)
   {
-    if (req.body.action == "hit")
+    var hits_query = "UPDATE player" + req.body.player + ".hits SET hits=hits+1 WHERE player_frequency=($1)";
+
+    pg_client.query(hits_query, [req.body.hit], function(error, result)
     {
-      var hits_query = "UPDATE player" + req.body.player_hit + ".hits SET hits=hits+1 WHERE player_frequency=($1)";
+      //console.log(error, result);
+    });
 
-      pg_client.query(hits_query, [req.body.by_player], function(error, result)
-      {
-        //console.log(error, result);
-      });
-    }
+    res.status(200).send(req.body);
+  }
 
-    else if (req.body.action == "shot")
+  else if (req.body.shot !== undefined)
+  {
+    var shots_query = "UPDATE shots SET shots=shots+1 WHERE player_frequency=($1)";
+
+    pg_client.query(shots_query, [req.body.player], function(error, result)
     {
-      var shots_query = "UPDATE shots SET shots=shots+1 WHERE player_frequency=($1)";
-
-      pg_client.query(shots_query, [req.body.player], function(error, result)
-      {
-        //console.log(error, result);
-      });
-    }
+      //console.log(error, result);
+    });
 
     res.status(200).send(req.body);
   }
