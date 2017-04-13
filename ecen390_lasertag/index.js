@@ -26,6 +26,12 @@ app.post("/", function(req, res)
   if (req.body.hit !== undefined)
   {
     var hits_query = "UPDATE player" + req.body.player + ".hits SET hits=hits+1 WHERE player_frequency=($1)";
+    var shots_query = "UPDATE shots SET shots=shots+1 WHERE player_frequency=($1)";
+
+    pg_client.query(shots_query, [req.body.hit], function(error, result)
+    {
+      //console.log(error, result);
+    });
 
     pg_client.query(hits_query, [req.body.hit], function(error, result)
     {
@@ -75,6 +81,12 @@ io.on("connection", function(socket)
     socket.emit("takedowns", result);
   });
 
+  pg_client.query("SELECT row_to_json(r) FROM (SELECT * FROM scores) r", function(error, result)
+  {
+    //console.log(error, result);
+    socket.emit("scores", result);
+  });
+
   socket.on("ready", function(data)
   {
     //console.log("ready");
@@ -82,7 +94,7 @@ io.on("connection", function(socket)
     pg_client.on("notification", function(title)
     {
       // Used for debugging the grabbed notification.
-      //console.log("notification", title.payload);
+      console.log("notification", title.payload);
 
       if (JSON.parse(title.payload).takedowns !== undefined && JSON.parse(title.payload).player_frequency !== undefined)
       {
@@ -100,6 +112,12 @@ io.on("connection", function(socket)
       {
         //console.log("shot");
         io.emit("shot", JSON.parse(title.payload).player_frequency - 1, JSON.parse(title.payload).shots);
+      }
+
+      else if (JSON.parse(title.payload).scores !== undefined && JSON.parse(title.payload).player_frequency !== undefined)
+      {
+          console.log("score");
+          io.emit("score", JSON.parse(title.payload).player_frequency - 1, JSON.parse(title.payload).scores);
       }
 
       else

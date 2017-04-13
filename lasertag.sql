@@ -13,6 +13,19 @@ CREATE SCHEMA player8;
 CREATE SCHEMA player9;
 CREATE SCHEMA player10;
 
+-- Give permissions to the lasertag user
+GRANT ALL ON SCHEMA public TO lasertag;
+GRANT ALL ON SCHEMA player1 TO lasertag;
+GRANT ALL ON SCHEMA player2 TO lasertag;
+GRANT ALL ON SCHEMA player3 TO lasertag;
+GRANT ALL ON SCHEMA player4 TO lasertag;
+GRANT ALL ON SCHEMA player5 TO lasertag;
+GRANT ALL ON SCHEMA player6 TO lasertag;
+GRANT ALL ON SCHEMA player7 TO lasertag;
+GRANT ALL ON SCHEMA player8 TO lasertag;
+GRANT ALL ON SCHEMA player9 TO lasertag;
+GRANT ALL ON SCHEMA player10 TO lasertag;
+
 -- Create all the hit tables for each player
 CREATE TABLE player1.hits (player_frequency SERIAL NOT NULL PRIMARY KEY, hits integer);
 CREATE TABLE player2.hits (player_frequency SERIAL NOT NULL PRIMARY KEY, hits integer);
@@ -24,6 +37,21 @@ CREATE TABLE player7.hits (player_frequency SERIAL NOT NULL PRIMARY KEY, hits in
 CREATE TABLE player8.hits (player_frequency SERIAL NOT NULL PRIMARY KEY, hits integer);
 CREATE TABLE player9.hits (player_frequency SERIAL NOT NULL PRIMARY KEY, hits integer);
 CREATE TABLE player10.hits (player_frequency SERIAL NOT NULL PRIMARY KEY, hits integer);
+
+-- Create a view to show the total score for each player
+CREATE VIEW score AS SELECT (SELECT (takedowns.player_1 - (hits.player_1 / 10)::float)::float * ((takedowns.player_1 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 1) AS player_1,
+       (SELECT (takedowns.player_2 - (hits.player_2 / 10)::float)::float * ((takedowns.player_2 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 2) AS player_2,
+       (SELECT (takedowns.player_3 - (hits.player_3 / 10)::float)::float * ((takedowns.player_3 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 3) AS player_3,
+       (SELECT (takedowns.player_4 - (hits.player_4 / 10)::float)::float * ((takedowns.player_4 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 4) AS player_4,
+       (SELECT (takedowns.player_5 - (hits.player_5 / 10)::float)::float * ((takedowns.player_5 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 5) AS player_5,
+       (SELECT (takedowns.player_6 - (hits.player_6 / 10)::float)::float * ((takedowns.player_6 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 6) AS player_6,
+       (SELECT (takedowns.player_7 - (hits.player_7 / 10)::float)::float * ((takedowns.player_7 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 7) AS player_7,
+       (SELECT (takedowns.player_8 - (hits.player_8 / 10)::float)::float * ((takedowns.player_8 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 8) AS player_8,
+       (SELECT (takedowns.player_9 - (hits.player_9 / 10)::float)::float * ((takedowns.player_9 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 9) AS player_9,
+       (SELECT (takedowns.player_10 - (hits.player_10 / 10)::float)::float * ((takedowns.player_10 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 10) AS player_10;
+
+-- Allow the scores table to be selected
+GRANT SELECT ON scores TO PUBLIC;
 
 -- Create a view to show the total takedowns for each player
 CREATE VIEW takedowns AS SELECT (SELECT hits FROM player1.hits WHERE player_frequency=1) +
@@ -235,6 +263,12 @@ CREATE FUNCTION get_takedown_value(player_frequency integer) RETURNS TABLE (fc j
 -- Create function to return the hits value for a player
 CREATE FUNCTION get_hit_value(player_frequency integer) RETURNS TABLE (fc json) AS $$ BEGIN IF player_frequency = 1 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'hits', player_1) FROM hits; ELSIF player_frequency = 2 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'hits', player_2) FROM hits; ELSIF player_frequency = 3 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'hits', player_3) FROM hits; ELSIF player_frequency = 4 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'hits', player_4) FROM hits; ELSIF player_frequency = 5 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'hits', player_5) FROM hits; ELSIF player_frequency = 6 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'hits', player_6) FROM hits; ELSIF player_frequency = 7 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'hits', player_7) FROM hits; ELSIF player_frequency = 8 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'hits', player_8) FROM hits; ELSIF player_frequency = 9 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'hits', player_9) FROM hits; ELSIF player_frequency = 10 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'hits', player_10) FROM hits; ELSE RETURN QUERY SELECT json_build_object('player_frequency', 0, 'hits', 0) FROM hits; END IF; RETURN; END; $$ LANGUAGE plpgsql;
 
+-- Create function to return the scores value for a player
+CREATE FUNCTION get_score_value(player_frequency integer) RETURNS TABLE (fc json) AS $$ BEGIN IF player_frequency = 1 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'scores', player_1) FROM scores; ELSIF player_frequency = 2 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'scores', player_2) FROM scores; ELSIF player_frequency = 3 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'scores', player_3) FROM scores; ELSIF player_frequency = 4 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'scores', player_4) FROM scores; ELSIF player_frequency = 5 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'scores', player_5) FROM scores; ELSIF player_frequency = 6 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'scores', player_6) FROM scores; ELSIF player_frequency = 7 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'scores', player_7) FROM scores; ELSIF player_frequency = 8 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'scores', player_8) FROM scores; ELSIF player_frequency = 9 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'scores', player_9) FROM scores; ELSIF player_frequency = 10 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'scores', player_10) FROM scores; ELSE RETURN QUERY SELECT json_build_object('player_frequency', 0, 'scores', 0) FROM scores; END IF; RETURN; END; $$ LANGUAGE plpgsql;
+
+-- Create function to update the score table
+CREATE FUNCTION notify_score_table() RETURNS trigger AS $$ DECLARE BEGIN PERFORM pg_notify('watchers', get_score_value(NEW.player_frequency)::text); RETURN NULL; END; $$ LANGUAGE plpgsql;
+
 -- Create function to update the takedown table
 CREATE FUNCTION notify_takedown_table() RETURNS trigger AS $$ DECLARE BEGIN PERFORM pg_notify('watchers', get_takedown_value(NEW.player_frequency)::text); RETURN NULL; END; $$ LANGUAGE plpgsql;
 
@@ -246,6 +280,20 @@ CREATE FUNCTION notify_shot_table() RETURNS trigger AS $$ DECLARE BEGIN PERFORM 
 
 -- Create trigger for the shots table
 CREATE TRIGGER shots_table_trigger AFTER UPDATE ON shots FOR EACH ROW EXECUTE PROCEDURE notify_shot_table();
+
+-- Create the triggers for the scores table
+CREATE TRIGGER scores_table_trigger AFTER UPDATE ON shots FOR EACH ROW EXECUTE PROCEDURE notify_score_table();
+
+CREATE TRIGGER player1_score_table_trigger AFTER UPDATE ON player1.hits FOR EACH ROW EXECUTE PROCEDURE notify_score_table();
+CREATE TRIGGER player2_score_table_trigger AFTER UPDATE ON player2.hits FOR EACH ROW EXECUTE PROCEDURE notify_score_table();
+CREATE TRIGGER player3_score_table_trigger AFTER UPDATE ON player3.hits FOR EACH ROW EXECUTE PROCEDURE notify_score_table();
+CREATE TRIGGER player4_score_table_trigger AFTER UPDATE ON player4.hits FOR EACH ROW EXECUTE PROCEDURE notify_score_table();
+CREATE TRIGGER player5_score_table_trigger AFTER UPDATE ON player5.hits FOR EACH ROW EXECUTE PROCEDURE notify_score_table();
+CREATE TRIGGER player6_score_table_trigger AFTER UPDATE ON player6.hits FOR EACH ROW EXECUTE PROCEDURE notify_score_table();
+CREATE TRIGGER player7_score_table_trigger AFTER UPDATE ON player7.hits FOR EACH ROW EXECUTE PROCEDURE notify_score_table();
+CREATE TRIGGER player8_score_table_trigger AFTER UPDATE ON player8.hits FOR EACH ROW EXECUTE PROCEDURE notify_score_table();
+CREATE TRIGGER player9_score_table_trigger AFTER UPDATE ON player9.hits FOR EACH ROW EXECUTE PROCEDURE notify_score_table();
+CREATE TRIGGER player10_score_table_trigger AFTER UPDATE ON player10.hits FOR EACH ROW EXECUTE PROCEDURE notify_score_table();
 
 -- Create all the triggers for the player takedown tables
 CREATE TRIGGER player1_takedown_trigger AFTER UPDATE ON player1.hits FOR EACH ROW EXECUTE PROCEDURE notify_takedown_table();
