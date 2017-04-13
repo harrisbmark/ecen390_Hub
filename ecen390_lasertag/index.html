@@ -122,7 +122,7 @@
         labels: ["Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6", "Player 7", "Player 8", "Player 9", "Player 10"],
         datasets: [{
           label: "Number of Shots Fired",
-          data: hitChartData,
+          data: shotChartData,
           backgroundColor: [
             "rgba(255, 99, 132, 0.2)",
             "rgba(54, 162, 235, 0.2)",
@@ -215,27 +215,71 @@
 
       socket.on("connected", function(data)
       {
-        console.log("connected", "ready", data);
+        //console.log("connected", "ready", data);
         socket.emit("ready", {});
+
+        socket.on("hits", function(data)
+        {
+          //console.log("hits", data.rows[0].row_to_json);
+
+          for (i = 0, count = Object.keys(data.rows[0].row_to_json).length; i < count; i++)
+          {
+            var player = "player_" + (i + 1);
+
+            //console.log(data.rows[0].row_to_json[player]);
+            //console.log("Player: ", player, "Index: ", i, "Data: ", data.rows[0].row_to_json[player]);
+            hitChart.data.datasets[0].data[i] = data.rows[0].row_to_json[player];
+          }
+
+          hitChart.update(); 
+        });
+
+        socket.on("shots", function(data)
+        {
+          for (i = 0; i < data.rows.length; i++)
+          {
+            //console.log("shots", data.rows[i].row_to_json);
+            shotChart.data.datasets[0].data[data.rows[i].row_to_json["player_frequency"] - 1] = data.rows[i].row_to_json["shots"];
+          }
+
+          shotChart.update();
+        });
+
+        socket.on("takedowns", function(data)
+        {
+          //console.log("takedowns", data.rows[0].row_to_json);
+
+          for (i = 0, count = Object.keys(data.rows[0].row_to_json).length; i < count; i++)
+          {
+            var player = "player_" + (i + 1);
+
+            //console.log(data.rows[0].row_to_json[player]);
+            //console.log("Player: ", player, "Index: ", i, "Data: ", data.rows[0].row_to_json[player]);
+            takedownChart.data.datasets[0].data[i] = data.rows[0].row_to_json[player];
+          }
+
+          takedownChart.update();
+        });
+        
       });
 
       socket.on("shot", function(player_number, shots)
       {
-        console.log("shot", player_number, shots, shotChart);
+        //console.log("shot", player_number, shots, shotChart);
         shotChart.data.datasets[0].data[player_number] = shots;
         shotChart.update();
       });
 
       socket.on("hit", function(player_number, hits)
       {
-        console.log("hit", player_number, hits, hitChart);
+        //console.log("hit", player_number, hits, hitChart);
         hitChart.data.datasets[0].data[player_number] = hits;
         hitChart.update();
       });
 
       socket.on("takedown", function(player_number, takedowns)
       {
-        console.log("takedown", player_number, takedowns, takedownChart);
+        //console.log("takedown", player_number, takedowns, takedownChart);
         takedownChart.data.datasets[0].data[player_number] = takedowns;
         takedownChart.update();
       });
