@@ -38,21 +38,6 @@ CREATE TABLE player8.hits (player_frequency SERIAL NOT NULL PRIMARY KEY, hits in
 CREATE TABLE player9.hits (player_frequency SERIAL NOT NULL PRIMARY KEY, hits integer);
 CREATE TABLE player10.hits (player_frequency SERIAL NOT NULL PRIMARY KEY, hits integer);
 
--- Create a view to show the total score for each player
-CREATE VIEW score AS SELECT (SELECT (takedowns.player_1 - (hits.player_1 / 10)::float)::float * ((takedowns.player_1 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 1) AS player_1,
-       (SELECT (takedowns.player_2 - (hits.player_2 / 10)::float)::float * ((takedowns.player_2 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 2) AS player_2,
-       (SELECT (takedowns.player_3 - (hits.player_3 / 10)::float)::float * ((takedowns.player_3 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 3) AS player_3,
-       (SELECT (takedowns.player_4 - (hits.player_4 / 10)::float)::float * ((takedowns.player_4 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 4) AS player_4,
-       (SELECT (takedowns.player_5 - (hits.player_5 / 10)::float)::float * ((takedowns.player_5 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 5) AS player_5,
-       (SELECT (takedowns.player_6 - (hits.player_6 / 10)::float)::float * ((takedowns.player_6 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 6) AS player_6,
-       (SELECT (takedowns.player_7 - (hits.player_7 / 10)::float)::float * ((takedowns.player_7 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 7) AS player_7,
-       (SELECT (takedowns.player_8 - (hits.player_8 / 10)::float)::float * ((takedowns.player_8 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 8) AS player_8,
-       (SELECT (takedowns.player_9 - (hits.player_9 / 10)::float)::float * ((takedowns.player_9 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 9) AS player_9,
-       (SELECT (takedowns.player_10 - (hits.player_10 / 10)::float)::float * ((takedowns.player_10 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 10) AS player_10;
-
--- Allow the scores table to be selected
-GRANT SELECT ON scores TO PUBLIC;
-
 -- Create a view to show the total takedowns for each player
 CREATE VIEW takedowns AS SELECT (SELECT hits FROM player1.hits WHERE player_frequency=1) +
        (SELECT hits FROM player2.hits WHERE player_frequency=1) +
@@ -256,6 +241,21 @@ CREATE VIEW hits AS SELECT (SELECT hits FROM player1.hits WHERE player_frequency
        (SELECT hits FROM player10.hits WHERE player_frequency=8) +
        (SELECT hits FROM player10.hits WHERE player_frequency=9) +
        (SELECT hits FROM player10.hits WHERE player_frequency=10) AS player_10;
+
+-- Create a view to show the total score for each player
+CREATE VIEW score AS SELECT (SELECT (takedowns.player_1 - (hits.player_1 / 10)::float)::float * ((takedowns.player_1 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 1) AS player_1,
+       (SELECT (takedowns.player_2 - (hits.player_2 / 10)::float)::float * ((takedowns.player_2 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 2) AS player_2,
+       (SELECT (takedowns.player_3 - (hits.player_3 / 10)::float)::float * ((takedowns.player_3 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 3) AS player_3,
+       (SELECT (takedowns.player_4 - (hits.player_4 / 10)::float)::float * ((takedowns.player_4 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 4) AS player_4,
+       (SELECT (takedowns.player_5 - (hits.player_5 / 10)::float)::float * ((takedowns.player_5 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 5) AS player_5,
+       (SELECT (takedowns.player_6 - (hits.player_6 / 10)::float)::float * ((takedowns.player_6 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 6) AS player_6,
+       (SELECT (takedowns.player_7 - (hits.player_7 / 10)::float)::float * ((takedowns.player_7 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 7) AS player_7,
+       (SELECT (takedowns.player_8 - (hits.player_8 / 10)::float)::float * ((takedowns.player_8 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 8) AS player_8,
+       (SELECT (takedowns.player_9 - (hits.player_9 / 10)::float)::float * ((takedowns.player_9 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 9) AS player_9,
+       (SELECT (takedowns.player_10 - (hits.player_10 / 10)::float)::float * ((takedowns.player_10 + 1) / (shots + 1)::float)::float AS score FROM takedowns, hits, shots WHERE shots.player_frequency = 10) AS player_10;
+
+-- Allow the scores table to be selected
+GRANT SELECT ON scores TO PUBLIC;
 
 -- Create function to return the takedown value for a player
 CREATE FUNCTION get_takedown_value(player_frequency integer) RETURNS TABLE (fc json) AS $$ BEGIN IF player_frequency = 1 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'takedowns', player_1) FROM takedowns; ELSIF player_frequency = 2 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'takedowns', player_2) FROM takedowns; ELSIF player_frequency = 3 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'takedowns', player_3) FROM takedowns; ELSIF player_frequency = 4 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'takedowns', player_4) FROM takedowns; ELSIF player_frequency = 5 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'takedowns', player_5) FROM takedowns; ELSIF player_frequency = 6 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'takedowns', player_6) FROM takedowns; ELSIF player_frequency = 7 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'takedowns', player_7) FROM takedowns; ELSIF player_frequency = 8 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'takedowns', player_8) FROM takedowns; ELSIF player_frequency = 9 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'takedowns', player_9) FROM takedowns; ELSIF player_frequency = 10 THEN RETURN QUERY SELECT json_build_object('player_frequency', player_frequency, 'takedowns', player_10) FROM takedowns; ELSE RETURN QUERY SELECT json_build_object('player_frequency', 0, 'takedowns', 0) FROM takedowns; END IF; RETURN; END; $$ LANGUAGE plpgsql;
